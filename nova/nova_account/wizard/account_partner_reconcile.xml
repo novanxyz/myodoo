@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="partner_reconcile_journal" model="account.journal">
+        <field name="name">Reconcile Balance</field>
+        <field name="code">RECON</field>
+        <field name="type">general</field>
+        <field name="show_on_dashboard" eval="False"/>
+    </record>
+    
+    <record id="view_partner_reconcile_balance_form" model="ir.ui.view">
+    <field name="name">Partner Reconcile Balance</field>
+    <field name="model">account.partner.reconcile</field>
+    <field name="arch" type="xml">
+        <form string="Partner Reconcile">
+<!--            <header>
+                <button name="reconcile" type="object" string="Reconcile"/>
+            </header>-->
+            <sheet>
+                <group>
+                    <group>
+                        <field name="date" invisible="1"/>
+                        <field name="partner_id"/>
+                        <field name="journal_id"/>                        
+                    </group>
+                    <group>
+                        <field name="debit"/>
+                        <field name="credit"/>
+                    </group>
+                    <group>
+                        <field name="start_date"/>                                                            
+                    </group>
+                    <group>
+                        <field name="end_date"/>
+                    </group>
+                </group>
+                <notebook>
+                    <page string="Input Moves">                        
+                        <field name="input_moves">
+                            <tree>
+                                <field name="move_id"/>
+                                <field name="account_id"/>
+                                <field name="date"/>
+                                <field name="debit" sum="Outstanding Debit"/>
+                                <field name="credit" sum="Outstanding Credit"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Reconciliation Moves">                        
+                        <field name="output_moves">
+                            <tree>
+                                <field name="partner_id"/>
+                                <field name="account_id"/>
+                                <field name="date"/>
+                                <field name="debit" sum="Reconcile Debit"/>
+                                <field name="credit" sum="Reconcile Credit"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Others">
+                        <group>
+                            <field name="move_output" readonly="1"/>                            
+                            <field name="invoice_ids" widget="many2many_tags" readonly="1"/>
+                            <field name="valid" invisible="1"/>                            
+                        </group>                        
+                    </page>
+                </notebook>
+            <footer>
+                <button name="reconcile" type="object" string="Reconcile" class="o_wow oe_highlight" invisible="[('valid','=',False)]" />
+                <button name="reconcile_invoice" type="object" string="Reconcile Invoices" class="o_wow" invisible="[('valid','=',False)]" />
+                <button special="cancel" class="btn-default" string="Cancel"/>
+            </footer>
+            </sheet>
+        </form>
+    </field>
+    </record>
+    
+    <record id="partner_reconcile_balance_action" model="ir.actions.act_window">
+        <field name="name">Reconcile Partner Balance</field>
+        <field name="res_model">account.partner.reconcile</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+        <field name="target">new</field>
+        <field name="view_id" ref="view_partner_reconcile_balance_form"/>
+    </record>
+    
+    <menuitem id="menu_partner_reconcile_balance"
+            action="partner_reconcile_balance_action"
+            parent="account.menu_finance_entries"
+            groups="account.group_account_user"
+            sequence="2"/>    
+    
+    <record model="ir.values" id="action_partner_reconcile">
+            <field name="model_id" ref="base.model_res_partner" />
+            <field name="name">Reconcile Partner</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' +str(ref('partner_reconcile_balance_action'))" />
+            <field name="key">action</field>
+            <field name="model">res.partner</field>
+        </record>    
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates xml:space="preserve">
+
+<template id="contact" inherit_id="base.contact">
+    <xpath expr="//address/div" position="after">
+        <div t-if="object.my_field and 'my_field' in fields" 
+            class='css_editable_mode_hidden'>
+            <div itemprop="my_field" t-esc="object.my_field" 
+                style="margin-top:4px;margin-bottom:4px;font-size:10px;"/>
+        </div>
+   </xpath>
+</template>
+
+<t t-name="BarcodeWidget">
+    <input t-if="!widget.get('effective_readonly')" class="o_form_input"
+           t-att-barcode_events="widget.options.barcode_events"
+           t-att-type="widget.password ? 'password' : 'text'"
+           t-att-id="widget.id_for_label"
+           t-att-tabindex="widget.node.attrs.tabindex"
+           t-att-autofocus="widget.node.attrs.autofocus"
+           t-att-placeholder="widget.node.attrs.placeholder"
+           t-att-maxlength="widget.field.size"/>
+    <div t-if="widget.get('effective_readonly')">
+        <span/>
+        <a target="_blank">
+            <img/>
+        </a>
+    </div>
+</t>
+<t t-extend="report.client_action.ControlButtons">
+    <t t-jquery=".o_report_edit_mode" t-operation="after">
+        <select name="format" style="height:30px;width:65px;display:inline-block" class="print-select">
+            <option value="direct">Direct</option>
+            <option value="pdf">PDF</option>
+            <option value="raw">RAW</option>
+        </select>
+    </t>
+</t>
+</templates>

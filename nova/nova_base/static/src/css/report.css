@@ -1,0 +1,169 @@
+.company_name {
+  font-family: Comforta-Bold, sans-serif;
+}
+
+.page.sale-order.report table.table-info.without-border tr td span:before {
+}
+.page.sale-order.report table.table-info.without-border tr td {    
+}
+.page.sale-order.report table.table-info.without-border tr td:first-child {
+    text-align: right;
+}
+.page.sale-order.report table.table-info.without-border tr td:first-child:after {
+    content: ":";
+}
+.page.sale-order.report .general-info .table-info tbody tr td.text-right:first-child:after {
+    content: "";
+}
+.page.sale-order.report table tr td:first-child {
+    text-align: center;
+}
+.page.sale-order.report table tr td {
+    padding: 4px;
+}
+.page.sale-order.report table tr th {
+    text-align: center;
+    padding: 4px;
+    border-bottom: 1px solid black;
+    border-top:1px solid #000;
+}
+table.item-pages {border-bottom: 1px double #000;margin-bottom: 0px !important}
+table.item-pages tr:last-child {border-bottom: 1px solid #000;}
+.table-info td.ref {vertical-align: top;font-weight: 150;}
+.page [itemprop="name"] {font-weight: 200}
+
+.header {
+float: right;
+transform: rotate(270deg);
+border-left: 1px solid red;
+padding-left: 12px;
+position: absolute;
+width: 160px !important;
+right: 0;
+font-size: 10px;
+height: 150px;
+}
+.header span[itemprop="name"] {
+color: red !important;
+}
+.header div[itemprop="address"] span {
+overflow: visible;
+white-space: normal;
+display: block;
+max-width: 140px;
+}
+.header i{display:none}
+.arrow {
+position: absolute;
+z-index: -1;
+}
+.arrow .first {
+width: 65px;
+height: 1px;
+margin-top: 50px;
+transform: rotate(315deg);
+border-top: 1px solid red;
+margin-left: 76px;
+}
+.arrow .second {
+width: 50px;
+height: 1px;
+border-bottom: 1px solid red;
+margin-top: 35px;
+margin-left: 22px;
+}
+.arrow .third {
+width: 1px;
+height: 200px;
+border-left: 1px solid red;
+transform: rotate(46deg);
+margin-top: -31px;
+}
+.page .title {
+margin-left: 125px;
+padding-top: 45px;
+}
+.date {
+clear: both;
+margin-top: 50px;
+margin-left: 65px;
+}
+.page .name {
+    margin-left: 35px;
+    margin-top: 50px;
+}
+
+.page .name [itemprop="name"]:before {
+    content: "Attn";
+    margin-right: 9px;
+}
+.page .name [itemprop="streetAddress"]:before {
+    content: "Add";
+    margin-right: 8px;
+}
+.item {
+    margin-left: 4px;
+    display: inline;
+}
+
+.subject {
+    font-size: 16px;
+}
+.subject .line { 
+    margin: 20px 0;
+    border-bottom: 1px solid red;
+    margin-left: 60px;
+}
+.product div {
+    float: left;
+    margin-right: 35px;
+}
+.product table {
+    width: calc(100% - 63px);
+}
+.product table td {
+    padding: 8px 0;
+    padding-top: 0;
+}
+.product table td:first-child {
+    width: 70%;
+}
+.product table td:nth-child(2) {
+    padding-right: 32px;
+}
+
+.product table td:nth-child(3) {
+    border-left: 1px solid red;
+}
+
+.sum td {
+    border: none !important;
+}
+.sum {
+    border-left: 1px solid red;
+    margin-left: 60px;
+    margin-right: 0;
+}
+.sum .pull-right {
+    width: 30%;
+}
+.sum tr.border-black {
+    border: 1px solid red;
+}
+.term {
+    margin-top: 50px;
+}
+.footer {
+    float: right;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+.footer img {
+    height: 250px;
+}
+
+@media print {
+    .o_control_panel {display:none !important}
+    header {display:none !important}
+}

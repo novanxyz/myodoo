@@ -1,0 +1,78 @@
+#version: '3'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:12-bullseye
+    hostname: localhost
+    user: root
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: odoo
+      POSTGRES_PASSWORD: odoo@N0v4
+      POSTGRES_DB: nova
+    volumes:
+    - postgres_data:/var/lib/postgresql/data
+    restart: always
+    networks:
+    - odoo_network
+      
+  odoo:
+    container_name: odoo
+    image: odoo:14.0
+    user: root
+    depends_on:
+    - postgres
+    ports:
+    - "8086:8086"
+    - "8072:8072"
+    environment:
+    - HOST=postgres
+    - USER=odoo
+    - PASSWORD=odoo@N0v4
+    volumes:
+    - ./nova:/mnt/addons:rw
+    - ./odoo.conf:/etc/odoo/odoo.conf:rw
+    restart: unless-stopped
+    networks:
+    - odoo_network
+  
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+    - 80:80
+    # - 443:443
+    volumes:
+    - ./nginx.conf:/etc/nginx/conf.d/odoo.conf:rw
+#    - /mnt/c/srv/odoo/certbot/conf:/etc/letsencrypt
+#    - /mnt/c/srv/odoo/certbot/www:/var/www/certbot
+    depends_on:
+    - odoo
+    networks:
+    - odoo_network
+        
+#  certbot:
+#    container_name: certbot
+#    image: certbot/certbot
+#    volumes:
+#    - /mnt/c/srv/odoo/certbot/conf:/etc/letsencrypt
+#    - /mnt/c/srv/odoo/certbot/www:/var/www/certbot
+#    command: certonly --webroot -w /var/www/certbot --force-renewal --email novan@novanxyz.com -d erp.novanxyz.com --agree-tos
+#    depends_on:
+#    - nginx
+#    networks:
+#    - odoo_network
+
+
+networks:
+  odoo_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.50.0.0/16
+          gateway: 172.50.0.1
+
+volumes:
+  postgres_data:
