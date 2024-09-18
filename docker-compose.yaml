@@ -9,13 +9,13 @@ services:
       - "5432:5432"
     environment:
       POSTGRES_USER: odoo
-      POSTGRES_PASSWORD: odoo@N0v4
+      POSTGRES_PASSWORD: ${ODOO_PASS}
       POSTGRES_DB: nova
     volumes:
-    - postgres_data:/var/lib/postgresql/data
+    - pg_data:/var/lib/postgresql/data
     restart: always
     networks:
-    - odoo_network
+     - odoo_network
       
   odoo:
     container_name: odoo
@@ -29,10 +29,12 @@ services:
     environment:
     - HOST=postgres
     - USER=odoo
-    - PASSWORD=odoo@N0v4
+    - PASSWORD=${ODOO_PASS}
     volumes:
     - ./nova:/mnt/addons:rw
     - ./odoo.conf:/etc/odoo/odoo.conf:rw
+    - odoo_data:/var/lib/odoo
+    - ./confortaa:/usr/lib/fonts
     restart: unless-stopped
     networks:
     - odoo_network
@@ -62,17 +64,25 @@ services:
 #    command: certonly --webroot -w /var/www/certbot --force-renewal --email novan@novanxyz.com -d erp.novanxyz.com --agree-tos
 #    depends_on:
 #    - nginx
-#    networks:
-#    - odoo_network
+#   networks:
+#   - odoo_network
 
-
+volumes:
+  pg_data:
+    driver: local 
+    driver_opts:
+      o: bind
+      type: none 
+      device: ./postgres
+  
+  odoo_data:
+    driver: local 
+    driver_opts:
+      o: bind
+      type: none 
+      device: ./data
+      
 networks:
   odoo_network:
     driver: bridge
-    ipam:
-      config:
-        - subnet: 172.50.0.0/16
-          gateway: 172.50.0.1
-
-volumes:
-  postgres_data:
+    external: true
