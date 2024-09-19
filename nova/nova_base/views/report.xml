@@ -1,3 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <template id="report_assets_common" name="systray_new_icon" inherit_id="web.report_assets_common">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/nova_base/static/src/css/report.scss" />
+    </xpath>
+  </template>
+
+  <template id="web.external_layout_standard">
+        <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+            <div class="row">
+                <div class="col-3 mb4" style="display:flex;align-items:center">
+                    <div></div>
+                    <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 150px;" alt="Logo"/>
+                </div>
+                <div class="col-6" name="company_address">
+                    <div class="company_name" style="text-transform:uppercase;font-weight:700;font-size:16pt" 
+                      t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                    <div class="street_address" style="font-size:10pt;max-width:300px"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
+                    <div class="info_address" style="font-size:smaller"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;website&quot;,&quot;phone&quot;], &quot;no_marker&quot;: false}"/>
+                </div>
+                <div t-if="report_name" class="report_name col-3" t-raw="report_name">
+                </div>
+            </div>
+            <div t-if="company.logo or company.report_header" class="row zero_min_height">
+                <div class="col-12">
+                    <div style="border-bottom: 1px solid black;"/>
+                </div>
+            </div>
+        </div>
+
+        <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+            <div class="pt-3">
+                <!-- This div ensures that the address is not cropped by the header. -->
+                <t t-call="web.address_layout"/>
+            </div>
+            <t t-raw="0"/>
+        </div>
+
+        <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" style="font-size:smaller">
+            <div class="text-center" style="border-top: 1px solid black;">
+                <div class="col-9 text-right bold" style="margin-top:22px; text-transform:uppercase;" t-field="company.report_header" name="moto"/>
+
+                <!--ul class="list-inline mb4">
+                    <li t-if="company.phone" class="list-inline-item d-inline"><span class="o_force_ltr" t-field="company.phone"/></li>
+                    <li t-if="company.email" class="list-inline-item d-inline"><span t-field="company.email"/></li>
+                    <li t-if="company.website" class="list-inline-item d-inline"><span t-field="company.website"/></li>
+                    <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+                </ul-->
+
+                <div name="financial_infos">
+                    <span t-field="company.report_footer"/>
+                </div>
+
+                <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page: <span class="page"/> / <span class="topage"/>
+                </div>
+                <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                    <span t-field="o.name"/>
+                </div>
+            </div>
+        </div>
+  </template>
 </odoo>

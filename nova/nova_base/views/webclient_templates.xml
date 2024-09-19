@@ -25,7 +25,7 @@
                             Please click download button to get new license file!<br/>
                             or <br/>
                             Please upload new license file!<br/>
-                            Please contact <a href="mailto:info@vardion.com">Vardion</a> 
+                            Please contact <a href="mailto:info@vardion.com">Nova</a> 
                             for more information about license renewal.
                         </div>
 
@@ -74,14 +74,13 @@
             <t t-set="body_classname" t-value="'container'"/>
 
             <div class="row">
-                <div class="col-md-6 col-md-offset-3 o_database_list">
+                <div class="col-md-6 col-md-offset-3 o_database_list" style="margin: 0 auto;">
                     <div class="text-center">
                         <img t-attf-src="/web/binary/company_logo{{ '?dbname='+db if db else '' }}"/>
                     </div>
                     <t t-raw="0"/>
                     <div class="text-center" t-if="not disable_footer">                        
-                        <a class="" href="/web/database/license">Database License</a> |                        
-                        <a href="https://vardion.com" target="_blank">Powered by <span>Vardion</span></a>
+                        <a href="https://vardion.com" target="_blank">Powered by <span>Nova</span></a>
                     </div>
                 </div>
             </div>

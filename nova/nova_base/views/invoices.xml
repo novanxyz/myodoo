@@ -1,2 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<odoo></odoo>
+<odoo>
+    <template id="address_layout" inherit_id="web.address_layout">
+        <xpath expr="//div[@name='address']" position="before"><span>To:</span></xpath>
+    </template>
+
+  <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
+    <xpath expr="//div[hasclass('page')]/h2"  position="replace">
+      <t t-set="report_name">
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Quotation</span>
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
+            <span t-if="o.move_type == 'out_refund'">Credit Note</span>
+            <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
+            <span t-if="o.move_type == 'in_invoice'">Vendor Bill</span>
+            <span t-if="o.name != '/'" t-field="o.name"/>
+      </t>
+    </xpath>
+
+    <xpath expr="//p[@name='payment_communication']" position="replace">
+        <div class="row"/>
+        <div class="row">
+          <div class="col-6 payment_communication" >
+            <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication">Please use the following communication for your payment:
+                <p t-if="o.partner_bank_id" class="payment bank">
+                    <label>Account Number:</label>
+                        <strong><span t-field="o.partner_bank_id.acc_number"/></strong><br/>
+                    <label>Bank:</label>
+                        <span t-field="o.partner_bank_id.bank_id"/><br/>
+                    <label>Cabang:</label>
+                        <span t-field="o.partner_bank_id.bank_id.street"/><br/>
+                    <label>A/N:</label>
+                        <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                      </p>
+                    with note: <b><span t-field="o.payment_reference"/></b>
+                </p>
+                    <p t-if="o.invoice_payment_term_id" name="payment_term">
+                        <span t-field="o.invoice_payment_term_id.note"/>
+                    </p>
+                    <p t-if="o.narration" name="comment">
+                        <span t-field="o.narration"/>
+                    </p>
+                    <p t-if="o.fiscal_position_id.note" name="note">
+                        <span t-field="o.fiscal_position_id.note"/>
+                    </p>
+                    <p t-if="o.invoice_incoterm_id" name="incoterm">
+                        <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code"/> - <span t-field="o.invoice_incoterm_id.name"/>
+                    </p>
+                    <div id="qrcode" t-if="o.display_qr_code and o.amount_residual &gt; 0">
+                        <p t-if="qr_code_urls.get(o.id)">
+                            <strong class="text-center">Scan me with your banking app.</strong><br/><br/>
+                            <img class="border border-dark rounded" t-att-src="qr_code_urls[o.id]"/>
+                        </p>
+                    </div>
+          </div>
+          <div class="col-6 sign-area">
+            <div class="signature col-12">
+                <div class="signature_date" >
+                    <span t-esc="o.invoice_user_id.partner_id.city"/>,
+                    <span t-esc="datetime.datetime.now().strftime('%d %B %Y')"></span>
+                </div>
+                <div class="signature" style="height:calc(100% - 50px);">
+                          <img t-if="o.invoice_user_id.digital_signature" t-att-src="image_data_uri(o.invoice_user_id.digital_signature)" t-att-alt="o.invoice_user_id.name + ' digital signature'" class="digital_signature"/>
+                          <img t-if="not o.invoice_user_id.digital_signature" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" style="opacity:0;height:200px" t-att-alt="o.invoice_user_id.name + ' digital signature'" class="digital_signature" />
+                </div>
+                        
+                <div class="sign-name col-12" style="text-decoration:underline; vertical-align : bottom;" >
+                    <t t-esc="o.invoice_user_id.name"/>
+                </div>
+                <div class="sign-position"></div>
+                        
+            </div>          
+          </div>
+        </div>
+    </xpath>
+    <!--xpath expr="//p[@name='payment_term']" position="replace"><p/>
+    </xpath>
+    <xpath expr="//div[@id='qrcode']" position="replace"><div/>
+    </xpath-->
+  </template>
+</odoo>
