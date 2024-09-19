@@ -1,4 +1,4 @@
-#version: '3'
+# version: '3.3'
 services:
   postgres:
     container_name: postgres
@@ -34,39 +34,41 @@ services:
     - ./nova:/mnt/addons:rw
     - ./odoo.conf:/etc/odoo/odoo.conf:rw
     - odoo_data:/var/lib/odoo
-    - ./confortaa:/usr/lib/fonts
+    - ./comfortaa:/usr/lib/python3/dist-packages/odoo/addons/web/static/src/fonts/google/Comfortaa
+    - ./ssh/id_rsa.key:/root/.ssh/id_rsa:ro
     restart: unless-stopped
     networks:
     - odoo_network
   
-  nginx:
-    container_name: nginx
-    image: nginx:latest
-    restart: unless-stopped
-    ports:
-    - 80:80
-    # - 443:443
+  # nginx:
+  #   container_name: nginx
+  #   image: nginx:latest
+  #   restart: unless-stopped
+  #   ports:
+  #   - 80:80
+  #   - 443:443
+  #   volumes:
+  #   - ./nginx.conf:/etc/nginx/conf.d/default.conf:rw
+  #   - /mnt/c/srv/odoo/certbot/conf:/etc/letsencrypt
+  #   - /mnt/c/srv/odoo/certbot/www:/var/www/certbot
+  #   depends_on:
+  #   - odoo
+  #   networks:
+  #   - odoo_network
+
+  tunnel:
+    container_name: tunnel
+    image: kroniak/ssh-client:3.18
     volumes:
-    - ./nginx.conf:/etc/nginx/conf.d/odoo.conf:rw
-#    - /mnt/c/srv/odoo/certbot/conf:/etc/letsencrypt
-#    - /mnt/c/srv/odoo/certbot/www:/var/www/certbot
+    - ./ssh/id_rsa.key:/root/.ssh/id_rsa:ro
     depends_on:
     - odoo
     networks:
     - odoo_network
-        
-#  certbot:
-#    container_name: certbot
-#    image: certbot/certbot
-#    volumes:
-#    - /mnt/c/srv/odoo/certbot/conf:/etc/letsencrypt
-#    - /mnt/c/srv/odoo/certbot/www:/var/www/certbot
-#    command: certonly --webroot -w /var/www/certbot --force-renewal --email novan@novanxyz.com -d erp.novanxyz.com --agree-tos
-#    depends_on:
-#    - nginx
-#   networks:
-#   - odoo_network
+    command: ["ssh", "-o StrictHostKeyChecking=no","-NR","8086:odoo:8069","bitnami@novaarthama.com"]
 
+
+    
 volumes:
   pg_data:
     driver: local 
@@ -81,6 +83,12 @@ volumes:
       o: bind
       type: none 
       device: ./data
+  ssh_key:
+    driver: local
+    driver_opts:
+      o: "bind,ro"
+      type: none
+      device: ./ssh
       
 networks:
   odoo_network:
