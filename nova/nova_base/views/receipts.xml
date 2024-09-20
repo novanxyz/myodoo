@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <template id="account.report_payment_receipt_document" name="receipt fixed">
+    <t t-call="web.external_layout">
+    <t t-set="o" t-value="o.with_context(lang=lang)"/>
+    <div class="page">
+        <t t-set="report_name">
+            <span t-if="o.payment_type=='inbound'">KWITANSI PENERIMAAN: <strong t-field="o.name"/></span>
+            <span t-if="o.payment_type=='outbound'">KWITANSI PEMBAYARAN: <strong t-field="o.name"/></span>
+        </t>
+
+        <section>
+            <div class="row partner">
+              <label class="partner" t-if="o.payment_type=='inbound'">Terima Dari</label>
+              <label class="" t-if="o.payment_type=='outbound'">Dibayar Kepada</label>
+              <div class="partner">
+                <span t-field="o.partner_id" t-options="{'widget': 'contact', 'fields': ['name','contact'], 'no_marker': true}"/>
+              </div>
+            </div>
+
+            <div class="row amount">
+             <label class="" >Sejumlah</label>
+             <div class="amount number clearfix">
+                <span t-field="o.amount" t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+             </div>
+            </div>
+            <div class="row amount">
+             <label/>
+             <div class="amount words">
+                <span t-if="o.currency_id" t-esc="o.currency_id.amount_to_text(o.amount_total)"/>
+
+             </div>
+            </div>
+
+            <div class="row memo">
+              <label class="memo" >Untuk Pembayaran</label>
+              <div class="memo">
+                <span t-field="o.ref"/>
+              </div>
+
+            </div>
+
+            <div class="row via">
+             <label class="via" >Melalui</label>
+             <div class="via">
+                <p t-if="o.partner_bank_id" class="payment bank">
+                    <label>Account Number:</label>
+                        <strong><span t-field="o.partner_bank_id.acc_number"/></strong><br/>
+                    <label>Bank:</label>
+                        <span t-field="o.partner_bank_id.bank_id"/><br/>
+                    <label>Cabang:</label>
+                        <span t-field="o.partner_bank_id.bank_id.street"/><br/>
+                    <label>A/N:</label>
+                        <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                </p>
+                <span t-if="not o.partner_bank_id" class="payment bank">Cash</span>
+                             
+             </div>
+             </div>
+        </section>
+
+        <div class="row">
+          <div class="col-6 payment_communication" style="font-size:-1">
+            <p t-if="o.payment_type=='inbound'" name="payment_communication">
+            </p>
+            <p>Note:Transaksi dianggap lunas jika transaksi telah dikonfirmasi</p>
+          </div>
+          <div class="col-6 sign-area">
+            <div class="signature col-12">
+                <div class="signature_date" >
+                    <span t-esc="o.partner_id.city"/>,
+                    <span t-esc="o.date.strftime('%d %B %Y')"></span>
+                </div>
+                <div class="signature" style="height:calc(100% - 50px);">
+                          <img t-if="o.user_id.digital_signature" t-att-src="image_data_uri(o.user_id.digital_signature)" t-att-alt="o.user_id.name + ' digital signature'" class="digital_signature"/>
+                          <img t-if="not o.user_id.digital_signature" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII=" style="opacity:0;height:200px" t-att-alt="o.invoice_user_id.name + ' digital signature'" class="digital_signature" />
+                </div>
+                        
+                <div class="sign-name col-12" style="text-decoration:underline; vertical-align : bottom;" >
+                    <t t-esc="o.user_id.name"/>
+                </div>
+                <div class="sign-position"></div>
+                        
+            </div>          
+          </div>
+        </div>
+    </div>
+    </t>
+  </template>
+</odoo>

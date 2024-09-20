@@ -11,6 +11,7 @@
         'data/base.xml',
         'views/report.xml',
         'views/invoices.xml',
+        'views/receipts.xml',
         'views/webclient_templates.xml',
     ],
     'qweb' : [

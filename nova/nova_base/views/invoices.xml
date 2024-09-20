@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="address_layout" inherit_id="web.address_layout">
-        <xpath expr="//div[@name='address']" position="before"><span>To:</span></xpath>
+        <xpath expr="//div[@name='address']" position="before"><span>Kepada:</span></xpath>
     </template>
 
   <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
@@ -21,7 +21,8 @@
         <div class="row"/>
         <div class="row">
           <div class="col-6 payment_communication" >
-            <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication">Please use the following communication for your payment:
+            <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication">
+                Harap dibayarkan sejumlah total tersebut ke rekening:
                 <p t-if="o.partner_bank_id" class="payment bank">
                     <label>Account Number:</label>
                         <strong><span t-field="o.partner_bank_id.acc_number"/></strong><br/>
@@ -32,7 +33,7 @@
                     <label>A/N:</label>
                         <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
                       </p>
-                    with note: <b><span t-field="o.payment_reference"/></b>
+                    dengan catatan: <b><span t-field="o.payment_reference"/></b>
                 </p>
                     <p t-if="o.invoice_payment_term_id" name="payment_term">
                         <span t-field="o.invoice_payment_term_id.note"/>

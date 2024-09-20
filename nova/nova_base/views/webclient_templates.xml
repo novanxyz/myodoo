@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+  <template id="assets_backend" name="Backend Theme" inherit_id="web.assets_backend">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/nova_base/static/src/css/theme.scss" />
+    </xpath>
+    <xpath expr="//script[@src='/web/static/src/js/apps.js']" position="after">
+        <script type="text/javascript" src="/vardion_theme/static/src/js/theme.js"></script>
+    </xpath>
+  </template>
+
     <template id="license" name="License Upload">&lt;!DOCTYPE html&gt;
         <html>
         <head>

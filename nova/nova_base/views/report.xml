@@ -9,7 +9,7 @@
   <template id="web.external_layout_standard">
         <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
             <div class="row">
-                <div class="col-3 mb4" style="display:flex;align-items:center">
+                <div class="col-3 mb4" style="display:flex;align-items:center;text-align:center;max-width:175px">
                     <div></div>
                     <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 150px;" alt="Logo"/>
                 </div>
@@ -17,7 +17,7 @@
                     <div class="company_name" style="text-transform:uppercase;font-weight:700;font-size:16pt" 
                       t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;], &quot;no_marker&quot;: true}"/>
                     <div class="street_address" style="font-size:10pt;max-width:300px"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
-                    <div class="info_address" style="font-size:smaller"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;website&quot;,&quot;phone&quot;], &quot;no_marker&quot;: false}"/>
+                    <div class="info_address" style="font-size:smaller"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;vat&quot;,&quot;website&quot;], &quot;no_marker&quot;: false}"/>
                 </div>
                 <div t-if="report_name" class="report_name col-3" t-raw="report_name">
                 </div>
