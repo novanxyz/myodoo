@@ -65,7 +65,7 @@ services:
     - odoo
     networks:
     - odoo_network
-    command: ["ssh", "-o StrictHostKeyChecking=no","-NR","8069:odoo:8069","bitnami@novaarthama.com"]
+    command: ["ssh", "-o StrictHostKeyChecking=no","-NR","8069:odoo:8069","-R","8072:odoo:8072", "bitnami@novaarthama.com"]
 
 
     

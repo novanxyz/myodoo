@@ -27,6 +27,7 @@
         </a>
     </div>
 </t>
+
 <t t-extend="report.client_action.ControlButtons">
     <t t-jquery=".o_report_edit_mode" t-operation="after">
         <select name="format" style="height:30px;width:65px;display:inline-block" class="print-select">

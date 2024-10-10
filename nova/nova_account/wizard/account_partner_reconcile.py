@@ -7,7 +7,7 @@ class PartnerReconcile(models.TransientModel):
     def _get_invoices(self):        
         return self.env['account.invoice']
     
-    @api.multi
+    # @api.multi
     def _get_name(self):
         for r  in self:
             r.name = 'Balance Reconcile of %s @ %s' % ( r.partner_id.name , str(r.date)) if r.partner_id else ""        
@@ -60,7 +60,7 @@ class PartnerReconcile(models.TransientModel):
             self.output_moves += AccountMoveLine.new(l)    
         self.valid = bool( sum(self.output_moves.mapped('credit')) )
     
-    @api.multi
+    # @api.multi
     @api.depends('input_moves')
     def get_reconcile_lines(self):
         self.ensure_one()
@@ -92,7 +92,7 @@ class PartnerReconcile(models.TransientModel):
         return [ap_move,ar_move]
     
     
-    @api.multi
+    # @api.multi
     def reconcile(self):    
         self.ensure_one()
         move = {'date': self.date,'name': self.name ,'journal_id': self.journal_id.id,}
@@ -103,7 +103,7 @@ class PartnerReconcile(models.TransientModel):
         self.move_output   = output.id
         return output
     
-    @api.multi
+    # @api.multi
     def reconcile_invoice(self):
         self.ensure_one()
         move = self.reconcile()        

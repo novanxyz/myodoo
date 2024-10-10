@@ -16,5 +16,7 @@
     'description': """
     Create SSH tunnel for Web Reverse Proxy on remote server
     """,
-    'summary': 'Nova Base Functionalities',
+    'summary': 'SSH Tunnel To Other Productions Network',
+    'license' :  'AGPL-3',
+
 }

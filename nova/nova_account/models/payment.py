@@ -7,8 +7,8 @@ class AccountPaymentTerm(models.Model):
     _description = "Payment Term"
     _order = "name"
     
-    @api.one
-    def compute(self, value, date_ref=False):        
+    def compute(self, value, date_ref=False): 
+        self.ensure_one()       
         if self.env.context.get('currency_id'):
             currency = self.env['res.currency'].browse(self.env.context['currency_id'])
         else:
@@ -31,7 +31,6 @@ class AccountPaymentTerm(models.Model):
                     next_date = next_date.replace(day=line.fixed_date)
                     result.append((fields.Date.to_string(next_date), amt))
                     amount -= amt
-        print amount, result
         result += super(AccountPaymentTerm,self).compute(amount,date_ref)[0]                
         return result
     

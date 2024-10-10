@@ -1,14 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="address_layout" inherit_id="web.address_layout">
-        <xpath expr="//div[@name='address']" position="before"><span>Kepada:</span></xpath>
+        <xpath expr="//div[@name='address']" position="before"><label>Kepada:</label></xpath>
+        <xpath expr="//div[@name='address']" position="attributes">
+            <attribute name="style" add="max-width:60%"/>
+        </xpath>
     </template>
 
+  <!-- <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
+    <xpath expr="//div[hasclass('pt-3')]" position="before">
+        <div class="row ">
+        <p><label>Tanggal:</label>
+           <span t-esc="o.create_date"/>
+        </p>
+        <p><label>Hal:</label>
+           <span>Penawaran Product/Jasa</span>
+        </p>
+        </div>
+    </xpath>
+  </template> -->
+
   <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
+
     <xpath expr="//div[hasclass('page')]/h2"  position="replace">
       <t t-set="report_name">
             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>
-            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Quotation</span>
+            <span t-if="o.move_type == 'out_invoice' and o.state == 'draft'">Penawaran</span>
             <span t-if="o.move_type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
             <span t-if="o.move_type == 'out_refund'">Credit Note</span>
             <span t-if="o.move_type == 'in_refund'">Vendor Credit Note</span>
@@ -17,14 +34,59 @@
       </t>
     </xpath>
 
+
+    <xpath expr="//tbody/t/tr/t/td[2]/span[1]" position="replace">
+        <t t-if="line.product_uom_id.name == 'Unit'">
+            <span t-esc="round(line.quantity)"/>
+        </t>
+    </xpath>
+
+    <xpath expr="//div[@id='informations']" position="attributes">
+        <attribute name="t-if">o.move_type == 'out_invoice' and o.state != 'draft'</attribute>
+    </xpath>
+
+
+    <xpath expr="//div[@id='informations']" position="before">
+    <div class="preface" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+        <p/>
+        <p/>
+        <br/><br/>
+        <p>Dengan hormat,</p>
+        <p>Menindaklanjuti permintaan lisan yang kami terima sebelumnya, mengenai kebutuhan <span t-esc="o.ref"/> di organisasi saudara.
+        Dengan ini kami mengajukan penawaran produk dengan harga dan spesifikasi sebagai berikut: </p>
+    </div>
+    </xpath>
+    <xpath expr="//p[@name='payment_communication']" position="before">
+    <div class="postface" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
+        <br/>
+        <!--p t-if="o.attachment_ids">
+        Berikut kami sertakan spesifikasi produk yang kami tawarkan.</p-->
+        
+        <p>Harga tertera di penawaran ini berlaku untuk 14 hari, harap segera hubungi kami di email  <a href="mailto:sales@novaarthama.com">sales@novaarthama.com</a> atau  telp/whatsapp  <a href="tel:+628888035089">+62 8888 035 089</a> untuk informasi lebih lanjut.</p>
+        <p>Demikian surat penawaran ini kami buat, atas perhatian dan kerja samanya kami ucapkan terima kasih. </p>
+    </div>
+    </xpath>
+
+
     <xpath expr="//p[@name='payment_communication']" position="replace">
         <div class="row"/>
         <div class="row">
           <div class="col-6 payment_communication" >
-            <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference" name="payment_communication">
+          <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.state == 'draft' " name="approval">
+            <br/><br/>
+            Lembar Pengesahan:
+
+
+
+
+            <br/><br/><br/><br/><br/>
+            <label>Nama:</label><br/>
+            <label>Jabatan:</label>
+          </p>
+            <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.payment_reference and o.state != 'draft' " name="payment_communication">
                 Harap dibayarkan sejumlah total tersebut ke rekening:
                 <p t-if="o.partner_bank_id" class="payment bank">
-                    <label>Account Number:</label>
+                    <label>Account #:</label>
                         <strong><span t-field="o.partner_bank_id.acc_number"/></strong><br/>
                     <label>Bank:</label>
                         <span t-field="o.partner_bank_id.bank_id"/><br/>
@@ -35,16 +97,16 @@
                       </p>
                     dengan catatan: <b><span t-field="o.payment_reference"/></b>
                 </p>
-                    <p t-if="o.invoice_payment_term_id" name="payment_term">
+                    <p t-if="o.invoice_payment_term_id and o.state  != 'draft' " name="payment_term">
                         <span t-field="o.invoice_payment_term_id.note"/>
                     </p>
                     <p t-if="o.narration" name="comment">
                         <span t-field="o.narration"/>
                     </p>
-                    <p t-if="o.fiscal_position_id.note" name="note">
+                    <p t-if="o.fiscal_position_id.note and o.state  != 'draft' " name="note">
                         <span t-field="o.fiscal_position_id.note"/>
                     </p>
-                    <p t-if="o.invoice_incoterm_id" name="incoterm">
+                    <p t-if="o.invoice_incoterm_id and o.state  != 'draft' " name="incoterm">
                         <strong>Incoterm: </strong><span t-field="o.invoice_incoterm_id.code"/> - <span t-field="o.invoice_incoterm_id.name"/>
                     </p>
                     <div id="qrcode" t-if="o.display_qr_code and o.amount_residual &gt; 0">
@@ -68,7 +130,9 @@
                 <div class="sign-name col-12" style="text-decoration:underline; vertical-align : bottom;" >
                     <t t-esc="o.invoice_user_id.name"/>
                 </div>
-                <div class="sign-position"></div>
+                <div class="sign-position col-12" style="text-decoration:underline; vertical-align : bottom;">
+                  <t t-esc="o.user_id.name"/>
+                </div>
                         
             </div>          
           </div>

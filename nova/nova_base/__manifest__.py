@@ -10,8 +10,6 @@
     'data': [
         'data/base.xml',
         'views/report.xml',
-        'views/invoices.xml',
-        'views/receipts.xml',
         'views/webclient_templates.xml',
     ],
     'qweb' : [
@@ -23,4 +21,5 @@
     Additional base feature for all Nova Projects
     """,
     'summary': 'Nova Base Functionalities',
+    'license' :  'AGPL-3',
 }

@@ -1,210 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-<template id="report.assets_common">
-    <t t-call="web.less_helpers"/>
+    <record model="report.paperformat" id="base.paperformat_euro">
+        <field name="name">A4</field>
+        <field name="default">True</field>
+        <field name="header_spacing">20</field>
+        <field name="margin_top">30</field>
+        <field name="margin_left">20</field>
+        <field name="margin_right">15</field>
+        <field name="margin_bottom">25</field>
+        <field name="orientation">Portrait</field>
+    </record>
 
-    <link href="/web/static/src/less/import_bootstrap.less" rel="stylesheet" type="text/less"/>
-    <link href="/base/static/src/css/description.css" rel="stylesheet" type="text/css"/>
+    <record model="report.paperformat" id="a5_paper_portrait">
+        <field name="name">A5 portrait</field>
+        <field name="header_spacing">20</field>
+        <field name="margin_top">30</field>
+        <field name="margin_left">20</field>
+        <field name="margin_right">15</field>
+        <field name="margin_bottom">25</field>
+        <field name="orientation">Portrait</field>
+    </record>
+    <record model="report.paperformat" id="a5_paper_landscape">
+        <field name="name">A5 landscape</field>
+        <field name="header_spacing">20</field>
+        <field name="margin_top">30</field>
+        <field name="margin_left">20</field>
+        <field name="margin_right">15</field>
+        <field name="margin_bottom">25</field>
+        <field name="orientation">Landscape</field>
+    </record>
 
-    <link rel="stylesheet" type="text/less" href="/web_editor/static/src/less/web_editor.common.less"/>
+    <record model="ir.actions.report" id="account.action_report_payment_receipt">
+        <field name="paperformat_id" ref="nova_account.a5_paper_landscape"/>
+    </record>
 
-    <!-- FIXME remove website dependency ..? -->
-    <link href="/website/static/src/less/website.wrapwrap.less" rel="stylesheet" type="text/less"/>
-    <link href="/website/static/src/less/website.snippets.less" rel="stylesheet" type="text/less"/>
 
-    <link href="/report/static/src/less/report.less" rel="stylesheet" type="text/less"/>
-    <link href="/web/static/lib/fontawesome/css/font-awesome.css" rel="stylesheet" type="text/css"/>
+  <template id="report_assets_common" name="nova account styles" inherit_id="web.report_assets_common">
+    <xpath expr="//link[last()]" position="after">
+        <link rel="stylesheet" type="text/scss" href="/nova_account/static/src/css/account.scss" />
+    </xpath>
+  </template>
 
-    <link href="/vardion_base/static/src/css/report.css" rel="stylesheet" type="text/css"/>
-</template>
-
-<template id="account.report_invoice_document">
-   <t t-call="report.external_layout">
-        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
-        <div class="page">
-            <div class="arrow">
-                <div class="first"></div>
-                <div class="second"></div>
-                <div class="third"></div>
+  <template id="external_layout_standard">
+    <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
+        <div class="row">
+            <div class="col-3 mb4" style="display:flex;align-items:center;text-align:center;max-width:120px;">
+                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 100px;" alt="Logo"/>
             </div>
-            <div class="title">
-                <span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                <span t-if="o.type == 'out_refund'">Refund</span>
-                <span t-if="o.type == 'in_refund'">Vendor Refund</span>
-                <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
-                <span t-field="o.number"/>
+            <div class="col-6" name="company_address">
+                <div class="company_name" style="text-transform:uppercase;font-weight:700;font-size:16pt" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;], &quot;no_marker&quot;: true}"/>
+                <div class="street_address" style="font-size:10pt;max-width:300px" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
+                <div class="info_address" style="font-size:smaller" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;vat&quot;,&quot;website&quot;], &quot;no_marker&quot;: false}"/>
             </div>
-            <div class="date" t-if="o.date_invoice">
-                <p t-field="o.date_invoice"/>
+            <div t-if="report_name" class="report_name col-3" style="float:right;text-align:right" t-raw="report_name">
             </div>
-            <div class="row">
-                <div name="invoice_address" class="name">
-                    <address t-field="o.partner_id"
-                        t-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": True}' />
-                    <span t-if="o.partner_id.vat">TIN: <span t-field="o.partner_id.vat"/></span>
-                </div>
-            </div>
-            
-            <div class="row mt32 mb32 hide">
-                <div class="col-xs-2" t-if="o.name">
-                    <strong>Description:</strong>
-                    <p t-field="o.name"/>
-                </div>
-                
-                <div class="col-xs-2" t-if="o.date_due and o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
-                    <strong>Due Date:</strong>
-                    <p t-field="o.date_due"/>
-                </div>
-                <div class="col-xs-2" t-if="o.origin">
-                    <strong>Source:</strong>
-                    <p t-field="o.origin"/>
-                </div>
-                <div class="col-xs-2" t-if="o.partner_id.ref">
-                    <strong>Customer Code:</strong>
-                    <p t-field="o.partner_id.ref"/>
-                </div>
-                <div name="reference" class="col-xs-2" t-if="o.reference">
-                    <strong>Reference:</strong>
-                    <p t-field="o.reference"/>
-                </div>
-            </div>
-            <div class="subject">
-                <span>Subject</span>
-                <div class="item"><span t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'proforma2'">PRO-FORMA</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'draft'">Draft Invoice</span>
-                <span t-if="o.type == 'out_invoice' and o.state == 'cancel'">Cancelled Invoice</span>
-                <span t-if="o.type == 'out_refund'">Refund</span>
-                <span t-if="o.type == 'in_refund'">Vendor Refund</span>
-                <span t-if="o.type == 'in_invoice'">Vendor Bill</span>
-                <span t-field="o.number"/></div>
-                <div class="line"></div>
-            </div>
-            <!-- Is there a discount on at least one line? -->
-            <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
-            <div class="product">
-                <div class="">
-                    <span>Item</span>
-                </div>
-                <table class="table-item">
-                    <tbody class="invoice_tbody">
-                        <tr t-foreach="o.invoice_line_ids" t-as="l">
-                            <td><span t-field="l.name"/></td>
-                            <td class="">
-                                <span t-field="l.quantity"/>
-                                <span t-field="l.uom_id"  groups="product.group_uom"/>
-                            </td>
-                            <td class="text-right">
-                                <span t-esc="'{:,.0f}'.format(l.price_subtotal).replace(',','.')"/>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-
-            <div class="row sum">
-                <div class="pull-right">
-                    <table class="table table-condensed">
-                        <tr class="">
-                            <td>Subtotal</td>
-                            <td class="text-right">
-                                <span t-field="o.amount_untaxed" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                            </td>
-                        </tr>
-                        <t t-foreach="o._get_tax_amount_by_group()" t-as="amount_by_group">
-                            <tr>
-                                <td><span t-esc="amount_by_group[0] if len(o.tax_line_ids) > 1 else (o.tax_line_ids.tax_id.description or o.tax_line_ids.tax_id.name)"/></td>
-                                <td class="text-right">
-                                    <span t-esc="amount_by_group[2]"/>
-                                </td>
-                            </tr>
-                        </t>
-                        <tr class="border-black">
-                            <td>Total</td>
-                            <td class="text-right">
-                                 <span t-field="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-
-            <!-- DO NOT REMOVE THIS TABLE. MANDATORY IN SOME COUNTRIES -->
-<!--            <div class="row" t-if="len(o.tax_line_ids) > 0">
-                <div class="col-xs-6">
-                    <table class="table table-condensed">
-                        <thead>
-                            <tr>
-                                <th>Tax</th>
-                                <th class="text-right">Base</th>
-                                <th class="text-right">Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr t-foreach="o.tax_line_ids" t-as="t">
-                                <td><span t-field="t.tax_id.description"/></td>
-                                <td class="text-right">
-                                    <span t-field="t.base" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                </td>
-                                <td class="text-right">
-                                    <span t-field="t.amount" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>-->
-            <div class="term" style="padding-left: 50px;">
-                <p t-if="o.comment">
-                <strong style="margin-left: -50px;">Terms:</strong>
-                    <span t-field="o.comment"/>
-                </p>
-                <p t-if="o.payment_term_id">
-                    <span t-field="o.payment_term_id.note"/>
-                </p>
-                <p t-if="o.fiscal_position_id.note">
-                    <strong>Fiscal Position Remark:</strong>
-                    <span t-field="o.fiscal_position_id.note"/>
-                </p>
-                <p>
-                    <p>
-                    Please transfer the funds to
-                    </p>
-                                        
-                    <li t-foreach="o.company_id.bank_journal_ids" t-as="journal" t-if="journal.display_on_footer">
-                        <t t-set="bank_acc" t-value="journal.bank_account_id"/>
-                        Bank      <span style="left:150px;position:absolute" t-esc="bank_acc.bank_name"/><br/>
-                                <t t-if="bank_acc.bank_bic"> (<span t-esc="bank_acc.bank_bic"/>)</t> 
-                        Acc Number<span style="left:150px;position:absolute" t-esc="bank_acc.acc_number"/><br/>
-                        Acc Name  <span style="left:150px;position:absolute" t-esc="journal.name"/>
-                        
-                    </li>
-                </p>
-            </div>
-            <div class="author" style="position:absolute;bottom:50px">
-                Sincerely, 
-                <span style="left:150px;position:absolute" t-field="o.user_id"/> <br/>
-                
-            </div>
-            
         </div>
-    </t>
-</template>
+        <div t-if="company.logo or company.report_header" class="row zero_min_height">
+            <div class="col-12">
+                <div style="border-bottom: 1px solid black;"/>
+            </div>
+        </div>
+    </div>
 
-<template id="account.report_invoice">
-    <t t-call="report.html_container">
-        <t t-foreach="docs" t-as="o">
-            <t t-call="account.report_invoice_document" t-lang="o.partner_id.lang"/>
-        </t>
-    </t>
-</template>
+    <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
+        <div class="pt-3">
+            <t t-call="web.address_layout"/>
+        </div>
+        <t t-raw="0"/>
+    </div>
 
-<template id="account.account_invoice_report_duplicate" inherit_id="account.report_invoice_document" primary="True">
-    <xpath expr="//div[@class='title']" position="replace">
+    <div t-attf-class="footer o_standard_footer o_company_#{company.id}_layout" style="font-size:smaller">
+        <div class="text-center" style="border-top: 1px solid black;">
+            <div class="col-9 text-right bold" style="margin-top:22px; text-transform:uppercase;" t-field="company.report_header" name="moto"/>
+
+            <!--ul class="list-inline mb4">
+                <li t-if="company.phone" class="list-inline-item d-inline"><span class="o_force_ltr" t-field="company.phone"/></li>
+                <li t-if="company.email" class="list-inline-item d-inline"><span t-field="company.email"/></li>
+                <li t-if="company.website" class="list-inline-item d-inline"><span t-field="company.website"/></li>
+                <li t-if="company.vat" class="list-inline-item d-inline"><t t-esc="company.country_id.vat_label or 'Tax ID'"/>: <span t-field="company.vat"/></li>
+            </ul-->
+
+            <div name="financial_infos">
+                <span t-field="company.report_footer"/>
+            </div>
+
+            <div t-if="report_type == 'pdf'" class="text-muted">
+                Page: <span class="page"/> / <span class="topage"/>
+            </div>
+            <div t-if="report_type == 'pdf' and display_name_in_footer" class="text-muted">
+                <span t-field="o.name"/>
+            </div>
+        </div>
+    </div>
+  </template>
+
+<!-- <template id="account_invoice_report_duplicate" inherit_id="account.report_invoice_document">
+    <xpath expr="//div[@class='name']" position="replace">
         <div class="title">
             <span>Duplicate</span>
             <span t-if="o.type == 'out_refund'">refund</span>
@@ -212,8 +103,9 @@
             <span t-field="o.number"/>
         </div>
     </xpath>
-</template>
+</template> -->
 
+<!-- 
 <template id="account.account_invoice_report_duplicate_main">
     <t t-call="report.html_container">
         <t t-foreach="docs" t-as="o">
@@ -304,7 +196,6 @@
                         </tbody>
                     </table>
                     
-                    <!-- THE SIMPLES RENDERED HERE -->
                     <table class="table table-condensed" t-if="not data['enable_filter'] and not data['debit_credit']">
                         <thead>
                             <tr>
@@ -332,15 +223,15 @@
                 </div>
             </t>
         </t>
-    </t>
+    </t> 
 </template>
-
-<report id="action_report_financial"
+-->
+<!-- <report id="action_report_financial"
         model="account.financial.report"
         string="Financial Report T Format"
         report_type="qweb-pdf"
         name="account.report_financial_t_format"
         file="account.report_financial_t_format"
-        />
+        /> -->
 
 </odoo>

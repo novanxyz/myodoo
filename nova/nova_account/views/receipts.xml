@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-  <template id="account.report_payment_receipt_document" name="receipt fixed">
+  <template id="report_payment_receipt_document" name="receipt fixed" inherit_id="account.report_payment_receipt_document">
+  <xpath expr="."  position="replace">
     <t t-call="web.external_layout">
     <t t-set="o" t-value="o.with_context(lang=lang)"/>
     <div class="page">
@@ -63,7 +64,7 @@
           <div class="col-6 payment_communication" style="font-size:-1">
             <p t-if="o.payment_type=='inbound'" name="payment_communication">
             </p>
-            <p>Note:Transaksi dianggap lunas jika transaksi telah dikonfirmasi</p>
+            <p>Note: Transaksi dianggap lunas jika transaksi telah dikonfirmasi oleh bank kami</p>
           </div>
           <div class="col-6 sign-area">
             <div class="signature col-12">
@@ -77,14 +78,17 @@
                 </div>
                         
                 <div class="sign-name col-12" style="text-decoration:underline; vertical-align : bottom;" >
-                    <t t-esc="o.user_id.name"/>
+                  <t t-esc="o.user_id.name"/>
                 </div>
-                <div class="sign-position"></div>
+                <div class="sign-position col-12" style="text-decoration:underline; vertical-align : bottom;">
+                  <t t-esc="o.user_id.name"/>
+                </div>
                         
             </div>          
           </div>
         </div>
     </div>
     </t>
+  </xpath>
   </template>
 </odoo>

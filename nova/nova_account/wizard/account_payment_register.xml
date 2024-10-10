@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="payment_register_draft" inherit_id="account.view_account_payment_register_form">
+        <xpath expr="//button[@name='action_create_payments']" position="before">
+            <button string="Create Draft Payment " name="action_create_draft_payments" type="object" class="btn btn-primary" data-hotkey="d"/>
+        </xpath>
+    </template>
+</odoo>

@@ -1,0 +1,167 @@
+.page.sale-order.report table.table-info.without-border tr td span:before {
+}
+.page.sale-order.report table.table-info.without-border tr td {    
+}
+.page.sale-order.report table.table-info.without-border tr td:first-child {
+    text-align: right;
+}
+.page.sale-order.report table.table-info.without-border tr td:first-child:after {
+    content: ":";
+}
+.page.sale-order.report table tr td:first-child {
+    text-align: center;
+}
+.page.sale-order.report table tr td {
+    padding: 4px;
+}
+.page.sale-order.report table tr th {
+    text-align: center;
+    padding: 4px;
+    border-bottom: 1px solid black;
+    border-top:1px solid #000;
+}
+table.item-pages {border-bottom: 1px double #000;margin-bottom: 0px !important}
+table.item-pages tr:last-child {border-bottom: 1px solid #000;}
+.table-info td.ref {vertical-align: top;font-weight: 150;}
+.page [itemprop="name"] {font-weight: 200}
+
+.article[data-oe-model="account.move"] {
+
+    p:not(:empty) + p {
+        margin-top: 5px;
+    }
+
+    div.preface , div.postface {
+        p { margin-bottom: 0px !important; }
+        text-align: justify  !important;
+    }
+
+    div[name="address"] .col-md-6 {
+        max-width: 60%;
+    }
+
+}
+
+.article[data-oe-model="account.payment"] { 
+    label {
+        margin-bottom: 0;;
+    }
+
+    .page section{
+
+    .row {
+        display: -webkit-box;
+        justify-content: start;
+        margin-bottom: 5px;
+
+        > label {
+            min-width: 175px;
+            margin-bottom: 0.5rem;
+            flex: 0 0 25%;
+        }
+    
+        > div {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+            clear: right;
+            max-width: 75%;
+            flex: 0 0 75%;
+        }
+        > div:last-child {
+            margin-right: 0;
+        }
+        
+    }
+    
+
+    // // position : relative;
+    // .row.partner div,.row.memo div {
+    //     font-weight: bold;
+    // }
+    .row div.amount.number {
+        background-color: #d1d1d1;
+        opacity: 0.9;
+        background-image: radial-gradient(#adadad 0.2px, #d1d1d5 0.2px);
+        background-size: 4px 4px;
+        clear: right;
+        font-weight: bold;
+        padding:5px;
+        width: 100%;
+    }
+    .row div.words{
+        // margin:  0 0 15px 175px;
+        font-style:italic;
+        padding:5px ;
+        border-bottom: 1px dotted #adadad;
+        width: 100%;
+    }
+
+}
+}
+
+#informations {
+    float: right;
+    margin:  0 !important;
+    min-width: 60% !important;
+    text-align: right;
+    .col-3 {
+      flex: 0 0 40% ;
+      min-width: 40%;
+      * {
+        display: inline-block;
+      }  
+    
+    }
+}
+
+
+table[name="invoice_line_table"] {
+    
+    th {
+        background-color: #d0d0d0;
+    }
+    th[name="th_description"] {
+        text-align: center !important;
+    }
+    th:nth-last-child(2), td:nth-last-child(2) {
+        display: none !important;
+    }
+
+    // th[name="th_taxes"] {
+    //     display: none !important;
+    // }
+
+    // td! >#line_tax_ids  {
+    //     display: none !important;
+    // }
+
+}
+
+div#total {
+    table {
+        tr:last-child, strong{
+            color: black !important;
+            font-weight: bold;
+            font-size: 12pt;
+        }
+
+    }
+}
+
+.article .payment_communication p.payment.bank{
+    font-size: 10pt;
+    label {
+      min-width: 75px;
+      text-align: right;
+      margin-bottom: 0rem;
+
+    }
+}
+
+p[name="payment_term"]:first-child {
+    display: block;
+} 
+p[name="payment_term"] {
+display: none;
+}

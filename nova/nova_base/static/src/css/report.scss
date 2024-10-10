@@ -31,131 +31,18 @@ header nav.o_main_navbar {
     font-weight: 500;
 }
 
-.article address[itemtype="http://schema.org/Organization"] div span[itemprop="name"] span::before {
-    content: " up: ";
-    margin-left: -35px;
+.article[data-oe-model="account.move"] address[itemtype="http://schema.org/Organization"] div span span[itemprop="name"]::before {
+    content: " up:     ";
+    margin-left: -30px;
 }
 
-.article[data-oe-model="account.payment"] { 
-    label {
-        margin-bottom: 0;;
-    }
-
-
-    .page section{
-
-    .row {
-        display: -webkit-box;
-        justify-content: start;
-        margin-bottom: 5px;
-
-        > label {
-            min-width: 175px;
-            margin-bottom: 0.5rem;
-            flex: 0 0 25%;
-        }
-    
-        > div {
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            flex: 1;
-            clear: right;
-            max-width: 75%;
-            flex: 0 0 75%;
-        }
-        > div:last-child {
-            margin-right: 0;
-        }
-        
-    }
-    
-
-    // // position : relative;
-    // .row.partner div,.row.memo div {
-    //     font-weight: bold;
-    // }
-    .row div.amount.number {
-        background-color: #d1d1d1;
-        opacity: 0.9;
-        background-image: radial-gradient(#adadad 0.2px, #d1d1d5 0.2px);
-        background-size: 4px 4px;
-        clear: right;
-        font-weight: bold;
-        padding:5px;
-        width: 100%;
-    }
-    .row div.words{
-        // margin:  0 0 15px 175px;
-        font-style:italic;
-        padding:5px ;
-        border-bottom: 1px dotted #adadad;
-        width: 100%;
-    }
-
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br:nth-child(odd){
+    content: "";
 }
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br::after {
+    content: ", ";
 }
 
-#informations {
-    float: right;
-    margin:  0 !important;
-    min-width: 60% !important;
-    text-align: right;
-    .col-3 {
-      flex: 0 0 40% ;
-      min-width: 40%;
-      * {
-        display: inline-block;
-      }  
-    
-    }
-}
-
-
-table[name="invoice_line_table"] {
-    
-    th {
-        background-color: #d0d0d0;
-    }
-    th[name="th_description"] {
-        text-align: center !important;
-    }
-    th:nth-last-child(2), td:nth-last-child(2) {
-        display: none !important;
-    }
-
-    // th[name="th_taxes"] {
-    //     display: none !important;
-    // }
-
-    // td! >#line_tax_ids  {
-    //     display: none !important;
-    // }
-
-}
-
-div#total {
-    table {
-        tr:last-child{
-            color: black !important;
-            font-weight: bold;
-            font-size: +1;
-        }
-    }
-}
-
-.article[data-oe-model="account.payment"] .payment_communication p.payment.bank{
-    label {
-      min-width: 150px;
-      text-align: right;
-    }
-}
-
-p[name="payment_term"]:first-child {
-    display: block;
-} 
-p[name="payment_term"] {
-display: none;
-}
 
 .signature {
     padding-top: 50px;;
@@ -183,10 +70,9 @@ display: none;
 
 }
 
-
 @font-face {
     font-family: "Comfortaa";
-    src: url("/web/static/src/scss/../fonts/google/Comfortaa/Comfortaa-Regular.ttf") format("truetype");
+    src: url("/nova_base/static/src/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
     font-weight: 400;
     font-style: normal;
   }

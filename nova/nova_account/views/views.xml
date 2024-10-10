@@ -1,11 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+
+    <record id="view_move_form" model="ir.ui.view">
+        <field name="name">account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@id='header_left_group']/label[@for='ref']" position="replace">
+            </xpath>
+            <xpath expr="//group[@id='header_left_group']/field[@name='ref']" position="replace">
+                <field name="ref" />
+            </xpath>
+
+            <xpath expr="//group[@id='header_left_group']/field[@name='payment_reference']" position="replace">
+            </xpath>
+        </field>
+    </record>
+
 <!--    <menuitem name="Invoicing"
             id="account.menu_finance"            
             web_icon="vardion_account,static/description/icon.png"
             sequence="40"/>-->
     
-    <record id="view_payment_term_line_form" model="ir.ui.view">
+    <!-- <record id="view_payment_term_line_form" model="ir.ui.view">
             <field name="name">account.payment.term.line.form</field>
             <field name="model">account.payment.term.line</field>
             <field name="inherit_id" ref="account.view_payment_term_line_form"/>
@@ -14,9 +31,9 @@
                     <field name="fixed_date" attrs="{'invisible':[('option','!=','fixed_date_after' )]}"/>
                 </field>
             </field>
-    </record>
+    </record> -->
     
-    <record id="view_account_report_tree_hierarchy" model="ir.ui.view">
+    <!-- <record id="view_account_report_tree_hierarchy" model="ir.ui.view">
         <field name="name">view_account_report_tree_hierarchy</field>
             <field name="model">account.financial.report</field>
         <field name="inherit_id" ref="account.view_account_report_tree_hierarchy"/>
@@ -25,5 +42,5 @@
                 <field name="report_side"/>
             </field>
         </field>
-    </record>
+    </record> -->
 </odoo>

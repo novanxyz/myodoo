@@ -5,7 +5,7 @@
         <link rel="stylesheet" type="text/scss" href="/nova_base/static/src/css/theme.scss" />
     </xpath>
     <xpath expr="//script[@src='/web/static/src/js/apps.js']" position="after">
-        <script type="text/javascript" src="/vardion_theme/static/src/js/theme.js"></script>
+        <script type="text/javascript" src="/nova_base/static/src/js/theme.js"></script>
     </xpath>
   </template>
 
@@ -89,7 +89,7 @@
                     </div>
                     <t t-raw="0"/>
                     <div class="text-center" t-if="not disable_footer">                        
-                        <a href="https://vardion.com" target="_blank">Powered by <span>Nova</span></a>
+                        <a href="https://novaarthama.com" target="_blank">Powered by <span>Nova</span></a>
                     </div>
                 </div>
             </div>
