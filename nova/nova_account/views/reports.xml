@@ -35,11 +35,11 @@
     </record>
 
 
-  <template id="report_assets_common" name="nova account styles" inherit_id="web.report_assets_common">
+  <!-- <template id="report_assets_common" name="nova account styles" inherit_id="web.report_assets_common">
     <xpath expr="//link[last()]" position="after">
         <link rel="stylesheet" type="text/scss" href="/nova_account/static/src/css/account.scss" />
     </xpath>
-  </template>
+  </template> -->
 
   <template id="external_layout_standard">
     <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">

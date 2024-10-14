@@ -4,7 +4,7 @@
     'name': 'Nova Account',
     'version': '1.0',
     'author': 'Novan Firmansyah',
-    'depends': ['web','nova_base','account'],
+    'depends': ['web','web_responsive','account'],
     'data': [
         'data/account.xml',
 #        'data/resource.xml',
@@ -17,6 +17,11 @@
         'views/views.xml',
 
     ],
+    'assets': {
+        'web.assets_frontend': [
+            'static/src/css/account.css'
+        ],
+    },
     'qweb' : [
         # 'static/src/xml/*.xml',
     ],
