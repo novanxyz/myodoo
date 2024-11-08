@@ -3,7 +3,7 @@
     <template id="address_layout" inherit_id="web.address_layout">
         <xpath expr="//div[@name='address']" position="before"><label>Kepada:</label></xpath>
         <xpath expr="//div[@name='address']" position="attributes">
-            <attribute name="style" add="max-width:60%"/>
+            <attribute name="style" add="max-width:60%; margin-left:unset !important"/>
         </xpath>
     </template>
 
@@ -75,10 +75,6 @@
           <p t-if="o.move_type in ('out_invoice', 'in_refund') and o.state == 'draft' " name="approval">
             <br/><br/>
             Lembar Pengesahan:
-
-
-
-
             <br/><br/><br/><br/><br/>
             <label>Nama:</label><br/>
             <label>Jabatan:</label>

@@ -24,4 +24,9 @@
     "qweb": ["static/src/xml/digital_sign.xml"],
     "installable": True,
     "auto_install": False,
+    "assets": {
+        "web.assets_backend" : [
+            "/web_digital_sign/static/src/js/digital_sign.js"
+        ]
+    }
 }

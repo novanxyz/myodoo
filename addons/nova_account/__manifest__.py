@@ -18,8 +18,8 @@
 
     ],
     'assets': {
-        'web.assets_frontend': [
-            'static/src/css/account.css'
+        'web.report_assets_common': [
+            'nova_account/static/src/css/account.scss'
         ],
     },
     'qweb' : [
