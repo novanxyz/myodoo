@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="address_layout" inherit_id="web.address_layout">
-        <xpath expr="//div[@name='address']" position="before"><label>Kepada:</label></xpath>
-        <xpath expr="//div[@name='address']" position="attributes">
-            <attribute name="style" add="max-width:60%; margin-left:unset !important"/>
+        <xpath expr="//div[hasclass('address')]" position="attributes">
+            <attribute name="style" add="max-width:100%; margin-left:unset !important"/>
         </xpath>
+        <xpath expr="//div[@name='address']" position="replace">
+            <div style="text-align: left; margin-bottom: 0;margin-top: 8px;">
+                <p><strong>Kepada:</strong></p>
+                <div>
+                    <span t-field="o.partner_id.name"/>
+                </div>
+                <div t-if="o.partner_id.street">
+                    <span t-field="o.partner_id.street"/><br/>
+                </div>
+                <div t-if="o.partner_id.street2">
+                    <span t-field="o.partner_id.street2"/><br/>
+                </div>
+                <div t-if="o.partner_id.city or o.partner_id.state_id or o.partner_id.zip">
+                    <span t-field="o.partner_id.city"/>
+                    <span t-if="o.partner_id.state_id">, <span t-field="o.partner_id.state_id.name"/></span>
+                    <span t-if="o.partner_id.zip">, <span t-field="o.partner_id.zip"/></span><br/>
+                </div>
+                <div t-if="o.partner_id.country_id">
+                    <span t-field="o.partner_id.country_id.name"/>
+                </div>
+            </div>
+        </xpath>
+
+        <!-- <xpath expr="//div[@name='address']" position="attributes">
+            <attribute name="style" add="max-width:100%; margin-left:unset !important"/>
+        </xpath> -->
     </template>
 
   <!-- <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
@@ -21,7 +46,6 @@
   </template> -->
 
   <template id="report_invoice_document" name="invoice fix" inherit_id="account.report_invoice_document">
-
     <xpath expr="//div[hasclass('page')]/h2"  position="replace">
       <t t-set="report_name">
             <span t-if="o.move_type == 'out_invoice' and o.state == 'posted'">Invoice</span>

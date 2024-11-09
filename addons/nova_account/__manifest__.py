@@ -6,7 +6,7 @@
     'author': 'Novan Firmansyah',
     'depends': ['web','web_responsive','account'],
     'data': [
-        'data/account.xml',
+        # 'data/account.xml',
 #        'data/resource.xml',
 #        'data/barcodes.xml',
         # 'wizard/account_partner_reconcile.xml',

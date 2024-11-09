@@ -8,7 +8,7 @@
     'website' : "https://novaarthama.com/",
     'category': "base",    
     'data': [
-        'data/base.xml',
+        # 'data/base.xml',
         'views/report.xml',
         'views/webclient_templates.xml',
     ],

@@ -42,26 +42,6 @@
   </template> -->
 
   <template id="external_layout_standard">
-    <div t-attf-class="header o_company_#{company.id}_layout" t-att-style="report_header_style">
-        <div class="row">
-            <div class="col-3 mb4" style="display:flex;align-items:center;text-align:center;max-width:120px;">
-                <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-width: 100px;" alt="Logo"/>
-            </div>
-            <div class="col-6" name="company_address">
-                <div class="company_name" style="text-transform:uppercase;font-weight:700;font-size:16pt" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;], &quot;no_marker&quot;: true}"/>
-                <div class="street_address" style="font-size:10pt;max-width:300px" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
-                <div class="info_address" style="font-size:smaller" t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;vat&quot;,&quot;website&quot;], &quot;no_marker&quot;: false}"/>
-            </div>
-            <div t-if="report_name" class="report_name col-3" style="float:right;text-align:right" t-raw="report_name">
-            </div>
-        </div>
-        <div t-if="company.logo or company.report_header" class="row zero_min_height">
-            <div class="col-12">
-                <div style="border-bottom: 1px solid black;"/>
-            </div>
-        </div>
-    </div>
-
     <div t-attf-class="article o_report_layout_standard o_company_#{company.id}_layout" t-att-data-oe-model="o and o._name" t-att-data-oe-id="o and o.id" t-att-data-oe-lang="o and o.env.context.get('lang')">
         <div class="pt-3">
             <t t-call="web.address_layout"/>
