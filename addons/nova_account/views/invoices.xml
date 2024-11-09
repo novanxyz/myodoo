@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <template id="custom_address_layout">
+        <div t-if="partner">
+            <div>
+                <span t-field="partner.name"/>
+            </div>
+            <div t-if="partner.street">
+                <span t-field="partner.street"/><br/>
+            </div>
+            <div t-if="partner.street2">
+                <span t-field="partner.street2"/><br/>
+            </div>
+            <div t-if="partner.city or partner.state_id or partner.zip">
+                <span t-field="partner.city"/>
+                <span t-if="partner.state_id">, <span t-field="partner.state_id.name"/></span>
+                <span t-if="partner.zip">, <span t-field="partner.zip"/></span><br/>
+            </div>
+            <div t-if="partner.country_id">
+                <span t-field="partner.country_id.name"/>
+            </div>
+        </div>
+    </template>
+
     <template id="address_layout" inherit_id="web.address_layout">
         <xpath expr="//div[hasclass('address')]" position="attributes">
             <attribute name="style" add="max-width:100%; margin-left:unset !important"/>
@@ -7,23 +29,9 @@
         <xpath expr="//div[@name='address']" position="replace">
             <div style="text-align: left; margin-bottom: 0;margin-top: 8px;">
                 <p><strong>Kepada:</strong></p>
-                <div>
-                    <span t-field="o.partner_id.name"/>
-                </div>
-                <div t-if="o.partner_id.street">
-                    <span t-field="o.partner_id.street"/><br/>
-                </div>
-                <div t-if="o.partner_id.street2">
-                    <span t-field="o.partner_id.street2"/><br/>
-                </div>
-                <div t-if="o.partner_id.city or o.partner_id.state_id or o.partner_id.zip">
-                    <span t-field="o.partner_id.city"/>
-                    <span t-if="o.partner_id.state_id">, <span t-field="o.partner_id.state_id.name"/></span>
-                    <span t-if="o.partner_id.zip">, <span t-field="o.partner_id.zip"/></span><br/>
-                </div>
-                <div t-if="o.partner_id.country_id">
-                    <span t-field="o.partner_id.country_id.name"/>
-                </div>
+                <t t-call="nova_account.custom_address_layout">
+                    <t t-set="partner" t-value="o.partner_id"/>
+                </t>
             </div>
         </xpath>
 
@@ -70,7 +78,7 @@
     </xpath>
 
 
-    <xpath expr="//div[@id='informations']" position="before">
+    <xpath expr="//div[@id='informations']" position="replace">
     <div class="preface" t-if="o.move_type == 'out_invoice' and o.state == 'draft'">
         <p/>
         <p/>
