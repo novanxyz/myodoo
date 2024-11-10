@@ -13,9 +13,10 @@
         'wizard/account_payment_register.xml',
         # 'views/reports.xml',
         # 'views/invoices.xml',
-        'views/receipts.xml',
+        # 'views/receipts.xml',
         'views/views.xml',
         'report/invoice_report.xml',
+        'report/receipts_report.xml',
     ],
     'assets': {
         'web.report_assets_common': [

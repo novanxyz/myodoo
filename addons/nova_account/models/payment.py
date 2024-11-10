@@ -2,6 +2,18 @@ from odoo import api, fields, models, _
 from dateutil.relativedelta import relativedelta
 from math import floor
 
+class AccountPayment(models.AbstractModel):
+    _inherit = 'account.payment'
+
+    def _get_report_values(self, docids, data=None):
+        docs = self.env['account.payment'].browse(docids)
+        return {
+            'doc_ids': docids,
+            'doc_model': 'account.payment',
+            'docs': docs,
+            'user_id': docs.mapped('user_id'),  # Include user_id explicitly
+        }
+
 class AccountPaymentTerm(models.Model):
     _inherit = "account.payment.term"
     _description = "Payment Term"
