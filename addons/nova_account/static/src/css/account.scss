@@ -3,8 +3,21 @@
 }
 
 .header .report_name {
- border: 1px solid #000;
+ text-align: right;
 }
+
+.article[data-oe-model="account.move"] address[itemtype="http://schema.org/Organization"] div span span[itemprop="name"]::before {
+    content: " up:     ";
+    margin-left: -30px;
+}
+
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br:nth-child(odd){
+    content: "";
+}
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br::after {
+    content: ", ";
+}
+
 
 .page.sale-order.report table.table-info.without-border tr td span:before {
 }
