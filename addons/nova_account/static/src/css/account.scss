@@ -57,8 +57,12 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
         text-align: justify  !important;
     }
 
-    div[name="address"] .col-md-6 {
+    div[name="address"] {
         max-width: 60%;
+
+       address span[itemprop="name"]{
+          content: str-replace(", ", "\A")
+       }
     }
 
 }
