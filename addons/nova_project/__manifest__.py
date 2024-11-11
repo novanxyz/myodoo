@@ -2,7 +2,7 @@
 {
     'name': 'Nova Project',
     "author": "Novan Firmansyah",
-    'version': '14.0.1.0',
+    'version': '16.0.1.0',
     "images":['static/description/main_screenshot.png'],
     'summary': "Print project and task report using different filter",
     'description': """This app helps user to print project and task report between start date and end date using different filter like user of project or task and task stage.
