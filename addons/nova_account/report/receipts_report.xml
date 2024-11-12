@@ -96,8 +96,8 @@
                       <span t-esc="o.date.strftime('%d %B %Y')"></span>
                   </div>
                   <div class="signature" style="height:calc(100% - 50px);">
-                    <img t-if="o.user_id.digital_signature" t-att-src="image_data_uri(o.user_id.digital_signature)" t-att-alt="o.user_id.name + ' digital signature'" class="digital_signature"/>
-                    <img t-if="not o.user_id.digital_signature"
+                    <img t-if="o.invoice_user_id.digital_signature" t-att-src="image_data_uri(o.invoice_user_id.digital_signature)" t-att-alt="o.user_id.name + ' digital signature'" class="digital_signature"/>
+                    <img t-if="not o.invoice_user_id.digital_signature"
                         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNkYAAAAAYAAjCB0C8AAAAASUVORK5CYII="
                         style="opacity:0;height:200px"
                         t-att-alt="o.invoice_user_id.name or '' + ' digital signature'"
@@ -109,7 +109,7 @@
                        Sign Name
                   </div>
                   <div class="sign-position col-12" style="text-decoration:underline; vertical-align : bottom;">
-                        <t t-esc="o.user_id.name"/>
+                        <t t-esc="o.invoice_user_id.function"/>
                        Sign Position
                   </div>
                           
