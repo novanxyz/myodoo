@@ -6,7 +6,7 @@
            <span class="contact_parent" t-esc="object.parent_name"/>
            <span class="contact_up"  t-esc="object.name"/>
         </t>
-        <t t-if="',' not in object.name">
+        <t t-if="',' not in name">
            <span class="contact_name"  t-esc="object.name"/>
         </t>
    </xpath>
