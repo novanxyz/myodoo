@@ -2,8 +2,13 @@
 <odoo>
   <template id="contact_name" inherit_id="base.contact_name">
     <xpath expr="//div/t[1]" position="replace">
-        <span class="contact_parent" t-if="object.name and object.parent_name" t-esc="parent_name"/>
-        <span class="contact_up" t-if="object.name" t-esc="name"/>
+        <t t-if="',' in object.name">
+           <span class="contact_parent" t-esc="object.parent_name"/>
+           <span class="contact_up"  t-esc="object.name"/>
+        </t>
+        <t t-if="',' not in object.name">
+           <span class="contact_namw"  t-esc="object.name"/>
+        </t>
    </xpath>
   </template>
   <template id="web.external_layout_standard">
