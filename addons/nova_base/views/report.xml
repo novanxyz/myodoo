@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
   <template id="contact_name" inherit_id="base.contact_name">
-    <xpath expr="//div" position="after">
-        <span t-esc="'[' + str(object.name) + '](' +str(object.parent_name) +')'"/>
+    <xpath expr="//div/t[0]" position="replace">
+        <span t-if="object.name and object.parent_name)" t-esc="parent_name"/>
+        <span t-if="object.name and not object.parent_name)" t-esc="name"/>
    </xpath>
   </template>
   <template id="web.external_layout_standard">
