@@ -2,7 +2,7 @@
 <odoo>
   <template id="contact_name" inherit_id="base.contact_name">
     <xpath expr="//div" position="after">
-        <span t-esc="object.name + object.parent_name"/>
+        <span t-esc="str(object.name) + str(object.parent_name)"/>
    </xpath>
   </template>
   <template id="web.external_layout_standard">
