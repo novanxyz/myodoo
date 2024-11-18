@@ -126,7 +126,7 @@
     <!-- customer contact -->
     <template id="address_layout" inherit_id="web.address_layout">
         <xpath expr="//div[@name='address']" position="attributes">
-            <attribute name="style" add="margin-left:0 !important;padding-top: 0 !important"/>
+            <attribute name="style" add="margin-left:0 !important;padding-top: 0 !important;width: 70% !important;"/>
         </xpath>
                
         <xpath expr="//div[@name='address']/*[1]" position="before">
