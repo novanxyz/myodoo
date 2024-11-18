@@ -58,7 +58,7 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
     }
 
     div[name="address"] {
-
+       min-width: 75%;
        address span[itemprop="name"]{
           content: str-replace(", ", "\A")
        }
