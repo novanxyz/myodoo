@@ -1,0 +1,90 @@
+/***
+
+NOVA REPORT.CSS
+
+***/
+.o_company_1_layout{
+    font-family: 'Comfortaa', sans-serif !important;
+}
+header nav.o_main_navbar {
+    background-color: navy;
+}
+
+// .header {
+
+//     .info_address address > div{
+//         width: 50%;
+//         display: inline;
+//         font-size: 8pt;
+//     }    
+//     .report_name {
+//         float: right;
+//         span{
+//         font-size:12pt;
+//         max-width:200px;
+//         text-align:right;
+//         display: block;
+//         }
+//     }
+
+// }
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="name"] {
+    display: block;
+    font-weight: 500;
+}
+
+.article[data-oe-model="account.move"] address[itemtype="http://schema.org/Organization"] div span span[itemprop="name"]::before {
+    content: " up:     ";
+    margin-left: -30px;
+}
+
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br:nth-child(odd){
+    content: "";
+}
+.article address[itemtype="http://schema.org/Organization"] div span[itemprop="streetAddress"] br::after {
+    content: ", ";
+}
+
+.payment_communication{
+    padding-top: 50px;
+}
+
+.signature {
+    padding-top: 50px;
+    text-align: center;
+    vertical-align: bottom;
+    height: 100%;
+    
+    .signature_date {
+        text-align:right;
+        width:100%
+    }
+    
+    .digital_signature {
+        width: 100%;
+    }
+    .digital_signature.empty{
+        opacity: 0;
+    }
+    
+    .sign_name {
+        text-decoration:underline; vertical-align : bottom;
+    }
+    
+
+}
+
+.signature-container{
+    height: 200px;
+}
+.sign-name, .sign-position{
+    margin-bottom: 8px;
+    display: block;
+}
+@font-face {
+    font-family: "Comfortaa";
+    src: url("/nova_base/static/src/fonts/comfortaa/Comfortaa-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+  }
+  

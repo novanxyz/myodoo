@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record model="ir.ui.view" id="project_invoice_wizard_view">
+        <field name="name">Generate Project Invoice Wizard </field>
+        <field name="model">project.invoice</field>
+        <field name="arch" type="xml">
+            <form string="Project">
+                <group colspan="2" string="Filter Project Report">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                    </group>
+                    <group>
+                        <field name="stage_id"/>
+                        <field name="tag_id"/>
+                    </group>
+
+                </group>
+                <footer>
+                    <button name="action_generate_invoice" string="Generate Invoice" 
+                        type="object" default_focus="1" class="oe_highlight" icon="fa-print"/>
+                    <button string="Cancel" class="btn-default" special="cancel" icon="fa-times"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    
+    <record id="action_generate_project_invoice" model="ir.actions.act_window">
+        <field name="name">Generate Project Invoice</field>
+        <field name="res_model">project.invoice</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="project_invoice_wizard_view"/>
+        <field name="target">new</field>
+        <field name="binding_model_id" ref="project.model_project_project"/>
+        <field name="binding_view_types">form</field>
+    </record>
+</odoo>
