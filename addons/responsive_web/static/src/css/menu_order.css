@@ -83,7 +83,7 @@ o_setting_search {
     z-index: 99;
     top: 40px;
     display:none;
-    background: url("../../src/img/home-menu-bg-overlay.svg"), linear-gradient(to bottom, #71639e, #b0adba);
+    background: url("../../src/img/home-menu-bg-overlay.svg"), linear-gradient(to bottom, #349f99, #b0adba);
 }
 .app-menu a{
     flex-basis: 19%;
@@ -168,7 +168,7 @@ o_setting_search {
     z-index: 99;
     top: 40px;
     display:none;
-    background: url("../../img/home-menu-bg-overlay.svg"), linear-gradient(to bottom, #71639e, #b0adba);
+    background: url("../../img/home-menu-bg-overlay.svg"), linear-gradient(to bottom, #349f99, #b0adba);
 }
 .app-menu a{
     flex-basis: 19%;

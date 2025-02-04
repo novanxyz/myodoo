@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+<record id="account_move_ref_fix" model="ir.ui.view">
+            <field name="name">account.move.efaktur.form.view</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="partner_id" position="after">
+		    <field name="ref"/>
+		</field>
+		<field name="ref" position="replace">
+		</field>
+	    </field>
+</record>
     <template id="custom_address_layout">
         <div t-if="partner">
             <div>

@@ -20,7 +20,8 @@
     ],
     'assets': {
         'web.report_assets_common': [
-            'nova_account/static/src/css/account.scss'
+            'nova_account/static/src/css/account.scss',
+            'nova_account/static/src/js/account.js'
         ],
     },
     'qweb' : [

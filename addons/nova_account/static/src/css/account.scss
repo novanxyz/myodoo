@@ -18,6 +18,9 @@
     content: ", ";
 }
 
+.info_address div {
+    display: inline-block;
+}
 
 .page.sale-order.report table.table-info.without-border tr td span:before {
 }
@@ -46,6 +49,11 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
 .table-info td.ref {vertical-align: top;font-weight: 150;}
 .page [itemprop="name"] {font-weight: 200}
 
+.report_name span > span {
+    display: block;
+    font-weight: bold;
+}
+
 .article[data-oe-model="account.move"] {
 
     p:not(:empty) + p {
@@ -59,27 +67,44 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
 
     div[name="address"] {
        min-width: 75%;
-       address span[itemprop="name"]{
-          content: str-replace(", ", "\A")
+       > address {
+         padding-left: 50px;
+
+	 span[itemprop="name"]{
+           content: str-replace(", ", "\A")
+	 }
+         span:last-child {
+           display: block;
+	 }
        }
     }
 
+    th[name="th_taxes"], td[name="td_taxes"] {
+        display: none !important;
+    }
+    th[name="th_quantity"] {
+        min-width: 120px;
+    }
 }
 
 .article[data-oe-model="account.payment"] { 
+    font-size: 18px;
+
     label {
         margin-bottom: 0;;
     }
-
+    .page > .row {
+        font-size: 16px;
+    }
     .page section{
-
+        
     .row {
         display: -webkit-box;
         justify-content: start;
         margin-bottom: 5px;
 
         > label {
-            min-width: 175px;
+            min-width: 200px;
             margin-bottom: 0.5rem;
             flex: 0 0 25%;
         }
@@ -124,9 +149,6 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
 }
 }
 
-div[name="address"] span {
-    display: block;
-}
 #informations {
     float: right;
     margin:  0 !important;

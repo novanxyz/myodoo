@@ -8,3 +8,4 @@ $(document).ready(function(){
 //         console.log("hello");
 //     },
 // });
+$('span.contact_up').replaceWith($('span.contact_up').text().replaceAll(',',',</span><span>'))

@@ -29,8 +29,8 @@
       <t t-set="o" t-value="o.with_context(lang=lang)"/>
       <div class="page mt-4">
           <t t-set="report_name">
-              <span t-if="o.payment_type=='inbound'">KWITANSI PENERIMAAN: <strong t-field="o.name"/></span>
-              <span t-if="o.payment_type=='outbound'">KWITANSI PEMBAYARAN: <strong t-field="o.name"/></span>
+              <span t-if="o.payment_type=='inbound'">KWITANSI PENERIMAAN: <span t-field="o.name"/></span>
+              <span t-if="o.payment_type=='outbound'">KWITANSI PEMBAYARAN: <span t-field="o.name"/></span>
           </t>
 
           <section>
@@ -75,7 +75,7 @@
                       <label>Cabang:</label>
                           <span t-field="o.partner_bank_id.bank_id.street"/><br/>
                       <label>A/N:</label>
-                          <span t-field="o.partner_bank_id.acc_holder_name"/><br/>
+                          <strong t-field="o.partner_bank_id.acc_holder_name"/><br/>
                   </p>
                   <span t-if="not o.partner_bank_id" class="payment bank">Cash</span>
                               
@@ -106,11 +106,9 @@
                           
                   <div class="sign-name col-12 aa" style="text-decoration:underline; vertical-align : bottom;" >
                        <t t-esc="o.invoice_user_id.name"/>
-                       Sign Name
                   </div>
-                  <div class="sign-position col-12" style="text-decoration:underline; vertical-align : bottom;">
+                  <div class="sign-position col-12" style="vertical-align : bottom;">
                         <t t-esc="o.invoice_user_id.function"/>
-                       Sign Position
                   </div>
                           
               </div>          
