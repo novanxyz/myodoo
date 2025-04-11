@@ -24,7 +24,7 @@
             <t t-call="web.external_layout" t-lang="lang">
                 <div class="page">
                     <div class="oe_structure"/>
-                    <t t-set="report_name">
+                    <t t-set="report_title">
                     <span>
                         <h3 class="text-center header bold">Project Report</h3>
                     </span>

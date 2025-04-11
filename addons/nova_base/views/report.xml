@@ -14,17 +14,16 @@
   <template id="web.external_layout_standard">
         <div t-attf-class="header o_company_#{company.id}_layout" >
             <div class="row header-row">
-                <div class="col-2 mb-1 header-logo" >
+                <div class="mb-1 header-logo" style="width:15%">
                     <img t-if="company.logo" t-att-src="image_data_uri(company.logo)" style="max-height: 100px;" alt="Logo"/>
                 </div>
-                <div class="col-6 header-address" name="company_address" >
+                <div class="header-address" name="company_address" style="width:55%">
                     <div class="company_name" style="text-transform:uppercase;font-weight:700;font-size:16pt" 
                       t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;name&quot;], &quot;no_marker&quot;: true}"/>
-                    <div class="street_address" style="font-size:10pt;max-width:300px"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
-                    <div class="info_address" style="font-size:smaller"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;vat&quot;,&quot;website&quot;], &quot;no_marker&quot;: false}"/>
+                    <div class="street_address" style="font-size:10pt;"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;], &quot;no_marker&quot;: true,&quot;no_tag_br&quot;:true}"/>
+                    <div class="info_address" style="font-size:smaller"   t-field="company.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;vat&quot;,&quot;website&quot;,&quot;phone&quot;], &quot;no_marker&quot;: false}"/>
                 </div>
-                <div t-if="report_name" class="report_name col-4" t-raw="report_name" >
-                </div>
+                <div class="report_title" t-if="report_title" t-raw="report_title"></div>
             </div>
             <div t-if="company.logo or company.report_header" class="row zero_min_height">
                 <div class="col-12">

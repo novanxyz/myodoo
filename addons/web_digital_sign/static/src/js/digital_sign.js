@@ -11,6 +11,65 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
 
     var _t = core._t;
     var QWeb = core.qweb;
+    
+    // MIT http://rem.mit-license.org
+    function trimCanvas(c) {
+        var ctx = c.getContext('2d'),
+            copy = document.createElement('canvas').getContext('2d'),
+            pixels = ctx.getImageData(0, 0, c.width, c.height),
+            l = pixels.data.length,
+            i,
+            bound = {
+                top: null,
+                left: null,
+                right: null,
+                bottom: null
+            },
+            x, y;
+        
+        // Iterate over every pixel to find the highest
+        // and where it ends on every axis ()
+        for (i = 0; i < l; i += 4) {
+            if (pixels.data[i + 3] !== 0) {
+                x = (i / 4) % c.width;
+                y = ~~((i / 4) / c.width);
+
+                if (bound.top === null) {
+                    bound.top = y;
+                }
+
+                if (bound.left === null) {
+                    bound.left = x;
+                } else if (x < bound.left) {
+                    bound.left = x;
+                }
+
+                if (bound.right === null) {
+                    bound.right = x;
+                } else if (bound.right < x) {
+                    bound.right = x;
+                }
+
+                if (bound.bottom === null) {
+                    bound.bottom = y;
+                } else if (bound.bottom < y) {
+                    bound.bottom = y;
+                }
+            }
+        }
+        
+        // Calculate the height and width of the content
+        var trimHeight = bound.bottom - bound.top,
+            trimWidth = bound.right - bound.left,
+            trimmed = ctx.getImageData(bound.left, bound.top, trimWidth, trimHeight);
+
+        copy.canvas.width = trimWidth;
+        copy.canvas.height = trimHeight;
+        copy.putImageData(trimmed, 0, 0);
+
+        // Return trimmed canvas
+        return copy.canvas;
+    }
 
     var FieldSignature = BasicFields.FieldBinaryImage.extend( {
         template: 'FieldSignature',
@@ -38,9 +97,13 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
                 "tabindex": "0",
                 'height': "100",
             });
-            this.empty_sign = this.$(".signature").jSignature("getData",
-                'image');
+            this.$(".signature").bind('change',function(){
+              var signature = this.$(".signature").jSignature("getData", 'image');
+              console.log(signature);
+            });
+            this.empty_sign = this.$(".signature").jSignature("getData",'image');
             self._render();
+            console.log(this.$(".signature"));
         },
         _on_clear_sign: function () {
             this.$(".signature > canvas").remove();
@@ -61,7 +124,11 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
         _on_save_sign: function (value_) {
             var self = this;
             this.$('> img').remove();
-            var signature = this.$(".signature").jSignature("getData", 'image');
+            var trimmedCanvas = trimCanvas(this.$(".signature > canvas"));
+            var signature = trimmedCanvas.toDataURL("image/png");
+            console.log(value_, signature);
+            //var signature = this.$(".signature").jSignature("getData", 'image');
+            //console.log(value_, signature);
             var is_empty = signature ?
                 self.empty_sign[1] === signature[1] :
                 false;
@@ -72,6 +139,7 @@ odoo.define('web_digital_sign.web_digital_sign', function (require) {
         _render: function () {
             var self = this;
             var url = this.placeholder;
+            console.log(url);
             if (this.value && !utils.is_bin_size(this.value)) {
                 url = 'data:image/png;base64,' + this.value;
             } else if (this.value) {

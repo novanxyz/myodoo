@@ -2,7 +2,7 @@
     // margin-top: 500px;
 }
 
-.header .report_name {
+.header .report_title {
  text-align: right;
 }
 
@@ -49,7 +49,7 @@ table.item-pages tr:last-child {border-bottom: 1px solid #000;}
 .table-info td.ref {vertical-align: top;font-weight: 150;}
 .page [itemprop="name"] {font-weight: 200}
 
-.report_name span > span {
+.report_title span > span {
     display: block;
     font-weight: bold;
 }

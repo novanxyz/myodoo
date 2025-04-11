@@ -4,7 +4,7 @@
     'name': 'Nova Base',
     'version': '16.0.1.0',
     'author': 'Novan Firmansyah',
-    'depends': ['web','base','product','resource','web_responsive'],
+    'depends': ['web','base','product','resource'],
     'website' : "https://novaarthama.com/",
     'category': "base",    
     'data': [
@@ -28,6 +28,9 @@
             "/nova_base/static/src/js/theme.js"
         ],
         "web.report_assets_common": [
+            "/nova_base/static/src/css/report.scss"
+        ],
+        "web.report_assets_pdf": [
             "/nova_base/static/src/css/report.scss"
         ]
     }
